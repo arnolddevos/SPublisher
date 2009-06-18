@@ -5,6 +5,9 @@ import java.awt.RenderingHints
 import javax.imageio.ImageIO
 import java.io.File
 
+/**
+ * Read write and resize images.
+ */
 object ImageUtil {
   implicit def RichImage( image: BufferedImage ) = new {
     

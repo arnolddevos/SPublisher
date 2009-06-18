@@ -2,6 +2,9 @@ package au.com.langdale.publisher
 import Util._
 import java.io.File
 
+/**
+ * Demontrates use of the Gallery trait.
+ */
 object ExampleGallery {
   class GallerySite( path: String ) extends Gallery {
     val project = new File(path)

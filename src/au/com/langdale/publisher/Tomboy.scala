@@ -11,6 +11,9 @@ import scala.collection.Set
 import Util._
 import RSS.Feed
 
+/**
+ * Adds all tagged notes from a Tomboy repository to the site as html pages.
+ */
 object Tomboy {
   val TOMBOY="http://beatniksoftware.com/tomboy"
   val SIZE="http://beatniksoftware.com/tomboy/size"

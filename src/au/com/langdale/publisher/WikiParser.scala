@@ -11,6 +11,12 @@ object WikiParser {
 }
 import WikiParser._
 
+/**
+ * Provides the wiki markup parsing for the site.
+ *
+ * A rudimentry markup is supported, resembling 
+ * cut-down Trac wiki  markup.
+ */
 trait WikiParser {
   def linkWordsAndURIs(text: String): NodeSeq  
   

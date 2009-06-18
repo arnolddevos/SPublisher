@@ -5,6 +5,12 @@ import scala.xml.{Node, NodeSeq, XML}
 import scala.xml.NodeSeq.Empty
 import Util._
 
+/**
+ * Adds an eclipse help table of contents document to the site.
+ *
+ * The TOC is generated from a list of anchors on a given html page.
+ * It is sufficient to make the site deployable as eclipse help content.
+ */
 trait TOC extends Publisher {
   
   val distrib: File

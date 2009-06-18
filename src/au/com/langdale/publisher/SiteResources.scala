@@ -7,6 +7,9 @@ import scala.collection.mutable.HashSet
 import RSS.Feed
 import Util._
 
+/**
+ * Copies resources (files) into the site, invoking transforms and templates as required.
+ */
 trait SiteResources extends Publisher {
 
   val sources: Seq[File]

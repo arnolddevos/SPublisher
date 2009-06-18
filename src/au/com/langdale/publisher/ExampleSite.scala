@@ -3,6 +3,9 @@ package au.com.langdale.publisher
 import Util._
 import java.io.File
 
+/**
+ * Demonstrates the composition of a site generator from traits.
+ */
 class ExampleSite(path: String) 
   extends SiteResources 
   with Tomboy 

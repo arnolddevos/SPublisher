@@ -9,6 +9,9 @@ import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
+/**
+ * Various supporting utilities some of which might deserve to go into a library.
+ */
 object Util {
   type Rule = PartialFunction[Node, Seq[Node]]
   class Menu(val title: String, val self: Seq[(String, String)]) extends SeqProxy[(String, String)]  

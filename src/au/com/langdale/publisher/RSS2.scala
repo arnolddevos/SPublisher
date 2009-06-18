@@ -4,6 +4,9 @@ import RSS.Item
 import Util._
 import scala.xml.NodeSeq.Empty
 
+/**
+ * A template for an RSS2 document.
+ */
 object RSS2 {
     
   trait ImageItem extends Item {

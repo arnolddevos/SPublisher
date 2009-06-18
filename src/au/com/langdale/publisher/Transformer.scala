@@ -5,6 +5,12 @@ import scala.xml.{XML, Node, Elem, TopScope, NodeSeq}
 import scala.xml.NodeSeq.Empty
 import Util._
 
+/**
+ * Povides html content scraping for the site.  
+ *
+ * The content is extracted from each html resource
+ * making it ready for templating and styling.
+ */
 trait Transformer {
 
   def fixLink(href: String): (String, String)  

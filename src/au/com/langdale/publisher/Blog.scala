@@ -6,6 +6,9 @@ import RSS.{Item, Feed}
 import scala.xml.{XML, NodeSeq, Node}
 import Util._
 
+/**
+ * Add RSS and HTML for a basic blog to the site.
+ */
 trait Blog extends Publisher {
   
   val distrib: File

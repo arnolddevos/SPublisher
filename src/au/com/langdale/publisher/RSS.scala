@@ -2,6 +2,9 @@ package au.com.langdale.publisher
 import java.util.Date
 import Util.formatW3CDate
 
+/**
+ * A template for an RSS1 document.
+ */
 object RSS {
   
   trait Item {

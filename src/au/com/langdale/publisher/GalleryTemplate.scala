@@ -4,6 +4,9 @@ import RSS.Feed
 import Util._
 import scala.xml.Comment
 
+/**
+ * Template for an HTML page containing a google slideshow widget.
+ */
 object GalleryTemplate {
 
   def apply(feed: Feed) =

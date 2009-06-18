@@ -1,6 +1,9 @@
 package au.com.langdale.publisher
 import scala.xml.{NodeSeq,Comment}
 
+/**
+ * Adds google analytics to the site.
+ */
 trait GoogleAnalytics {
   
   val familyDomain: String

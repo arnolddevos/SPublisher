@@ -9,6 +9,9 @@ import RSS.{Item, Feed}
 import scala.collection.mutable.ListBuffer
 import scala.xml.XML
 
+/**
+ * Copies a set of inmages into the site and adds an RSS2 and a preview page for them.
+ */
 trait Gallery extends Publisher {
   
   val images: File

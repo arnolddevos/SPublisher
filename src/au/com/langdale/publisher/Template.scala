@@ -4,6 +4,12 @@ import scala.xml.{NodeSeq, Node}
 import Util._
 import RSS.Feed
 
+/**
+ * Applies a template to each page. 
+ *
+ * The template provides a generic structure for the page, 
+ * relying on CSS for layout as well as styling.
+ */
 trait Template {
 
   val menu: Menu

@@ -4,6 +4,9 @@ import Util._
 import scala.xml.{NodeSeq, Text}
 import scala.util.matching.Regex.Match
 
+/**
+ * Generates internal and external URIs and links for the site.
+ */
 trait Linker extends Publisher {
   
   def fixLink(href: String) = href match {
