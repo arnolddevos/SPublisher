@@ -22,7 +22,7 @@ trait GoogleAnalytics {
     } catch(err) {}
   """
   
-  val analytics: NodeSeq = 
+  lazy val analytics: NodeSeq = 
     <script type="text/javascript">{Comment(script1)}</script> ++
   	<script type="text/javascript">{Comment(script2.replace("TRACKER",trackerID).replace("DOMAIN",familyDomain))}</script>
 }

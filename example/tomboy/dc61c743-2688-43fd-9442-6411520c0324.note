@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<note version="0.3" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size" xmlns="http://beatniksoftware.com/tomboy">
+  <title>SPublisher</title>
+  <text xml:space="preserve"><note-content version="0.1">SPublisher
+
+A simple, static, site publisher in scala. See the README.</note-content></text>
+  <last-change-date>2009-06-19T10:09:36.7412660+10:00</last-change-date>
+  <last-metadata-change-date>2009-06-19T10:09:36.7412660+10:00</last-metadata-change-date>
+  <create-date>2009-06-19T09:36:19.2788720+10:00</create-date>
+  <cursor-position>40</cursor-position>
+  <width>450</width>
+  <height>360</height>
+  <x>1439</x>
+  <y>660</y>
+  <tags>
+    <tag>system:notebook:published</tag>
+  </tags>
+  <open-on-startup>False</open-on-startup>
+</note>

@@ -32,15 +32,14 @@ class ExampleSite(path: String)
   
   val menu = new Menu("Main",
     List(
-      "Home" -> "index.html", 
-      "News Feed" -> "blog.html",
-      "Download" -> "Download.html"
+      "Home" -> "About_This_Web_Site.html", 
+      "News Feed" -> "blog.html"
     )
   )
     
   val footer =
     <div>
-      Web site created by <a href="http://www.langdale.com.au">Scala Static Publisher</a>. 
+      Web site created by <a href="http://github.com/arnolddevos/SPublisher">Static Site Publisher (in Scala)</a>. 
     </div>      
 }
 

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<note version="0.3" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size" xmlns="http://beatniksoftware.com/tomboy">
+  <title>published Notebook Template</title>
+  <text xml:space="preserve"><note-content version="0.1">published Notebook Template
+
+Describe your new note here.</note-content></text>
+  <last-change-date>2009-06-19T09:43:16.5383480+10:00</last-change-date>
+  <last-metadata-change-date>2009-06-19T09:43:16.5383480+10:00</last-metadata-change-date>
+  <create-date>2009-06-19T09:43:16.5265310+10:00</create-date>
+  <cursor-position>57</cursor-position>
+  <width>0</width>
+  <height>0</height>
+  <x>-1</x>
+  <y>-1</y>
+  <tags>
+    <tag>system:template</tag>
+    <tag>system:notebook:published</tag>
+  </tags>
+  <open-on-startup>False</open-on-startup>
+</note>
