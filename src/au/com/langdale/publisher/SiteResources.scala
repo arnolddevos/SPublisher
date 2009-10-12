@@ -9,6 +9,20 @@ import Util._
 
 /**
  * Copies resources (files) into the site, invoking transforms and templates as required.
+ * 
+ * Directories whose parent directory is listed in sources 
+ * are copied recursively in their entirety.
+ * 
+ * Files whose parent directory is listed in sources are transformed, copied or ignored
+ * as follows.  
+ * 
+ * Wikitext files with file extension .txt are transformed to html 
+ * by a (very) simple Trac-style parser.
+ * 
+ * Files with names ending in ~ are ignored.
+ * 
+ * Anything else is taken to be HTML and is passed through a cleanup transformation.  
+ * 
  */
 trait SiteResources extends Publisher {
 
@@ -25,7 +39,7 @@ trait SiteResources extends Publisher {
       require(s.isDirectory)
       for(f <- s.listFiles ) {
         if( isPage(f))
-          pageNames += stripext(f.getName)
+          pageNames += stripext(f.getName) + ".html"
         else if( isImage(f))
           imageNames += f.getName
       }
@@ -70,10 +84,10 @@ trait SiteResources extends Publisher {
     }
   }
   
-  override def getContent( wikiWord: String ): Option[(String, NodeSeq)] = {
-    for( s <- sources if s.isDirectory; f <- s.listFiles; if stripext(f.getName) == wikiWord ) 
+  override def getContent( pageName: String ): Option[(String, NodeSeq)] = {
+    for( s <- sources if s.isDirectory; f <- s.listFiles; if stripext(f.getName) == pageName ) 
       return Some(extract(XML.loadFile(f)))
-    super.getContent( wikiWord )
+    super.getContent( pageName )
   }
   
   private def publishWikiPage(f: File, g: File) {

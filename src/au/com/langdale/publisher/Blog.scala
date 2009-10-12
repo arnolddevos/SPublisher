@@ -16,8 +16,14 @@ trait Blog extends Publisher {
   val blogTitle: String
   val blogDescription: String
   def history: Seq[Item]
+  def fixLink( url: String): (String, String)
   
   def expand(title: String, content: NodeSeq, feeds: Seq[Feed]): Node
+  
+  override def scan {
+    super.scan
+    pageNames += "blog.html"
+  }
   
   override def publish {
     super.publish 
@@ -36,10 +42,10 @@ trait Blog extends Publisher {
   }
   
   private def content(items: Seq[Item]) = 
-    for( i <- items) yield
+    for( i <- items; (style, url) = fixLink(i.url)) yield
       <div class="blog-item">
         <h2>{i.title}</h2>
         <p>{i.description}</p>
-        <p><span class="datetime">{i.date}</span> <a href={i.url}>more...</a></p>
+        <p><span class="datetime">{i.date}</span> <a class={style} href={url}>more...</a></p>
       </div>
 }

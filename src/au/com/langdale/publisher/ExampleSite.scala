@@ -25,7 +25,7 @@ class ExampleSite(path: String)
   val localPrefix = ""
   val nonLocalPrefix = "http://www.example.com/"
   val familyDomain = ".example.com"
-  val oldDomains = Set("myoldsite.org", "www.myoldsite.org", "wiki.myoldsite.org")
+  val siteDomains = Set("myoldsite.org", "www.myoldsite.org", "wiki.myoldsite.org")
   val trackerID = "UA-9999999-1"
   val blogTitle = "Example.com News"
   val blogDescription = "All thats new in the examples world"

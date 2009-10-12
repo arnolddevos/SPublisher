@@ -8,13 +8,22 @@ import scala.util.matching.Regex.Match
  * Generates internal and external URIs and links for the site.
  */
 trait Linker extends Publisher {
+
+  val siteDomains: Set[String] /// all the domains at which this site will be deployed. 
+                               /// URLs in these domains will be converted to relative.
+  val familyDomain: String     /// any link to a domain ending in this is styled as 'internal' 
+  val localPrefix: String      /// prefix added to bare file names to form a relative URL
+  val nonLocalPrefix: String   /// prefix added to bare file names to form an absolute URL
   
+  /**
+   * Take a URI appearing in a raw resource and clean it up and classify it.
+   */
   def fixLink(href: String) = href match {
     case u @ URI(s, a, p, q, f) if s == null || s == "http" || s == "https" =>
-      if( a == null || (oldDomains contains a))
+      if( a == null || (siteDomains contains a))
         if( p.length > 0) {
           val r = defaultext(if(p.startsWith("/")) p.substring(1) else p, "html") 
-          if( r.endsWith(".html") && ! (pageNames contains stripext(r)))
+          if( r.endsWith(".html") && ! (pageNames contains r))
             ("internal", nonLocalPrefix + URI(null, null, r, null, f))
           else
             ("internal", localPrefix + URI(null, null, r, null, f))
@@ -31,15 +40,23 @@ trait Linker extends Publisher {
       ("nonavigate", u)
   }
   
-  def expandWord( word: String) = {
-    if( word contains "_" )
-      word.replace("_",  " ")
-    else
-      tokenize(CamelHump, word).mkString( " " )  
+  
+  /**
+   * Convert a string to a sequence of nodes with hyperlinks.
+   */
+  def linkWordsAndURIs(text: String): NodeSeq = mapMatches( BigWord, text) {
+    case URIPattern(Link(style, href)) =>  <a href={href} class={style}>{href}</a>
+    case ImagePattern(name, ext) if imageNames contains name + "." + ext => <img src={name + "." + ext}/>  
+    case Match(WikiWords(x)) => x  
   }
   
+  /**
+   * Convert a string to a sequence of nodes with hyperlinks replacing wiki words
+   */
   def linkWords(text: String): NodeSeq = mapMatches( Word, text) {
-    case Match(word) if pageNames contains word => 
+    case Match(word) if linkedTerms contains word => 
+      <a href={localPrefix + linkedTerms(word)} class="internal">{expandWord(word)}</a>
+    case Match(word) if pageNames contains word + ".html" => 
       <a href={localPrefix + word + ".html"} class="internal">{expandWord(word)}</a>
   }
   
@@ -63,14 +80,13 @@ trait Linker extends Publisher {
     }
   }
   
-  def linkWordsAndURIs(text: String): NodeSeq = mapMatches( BigWord, text) {
-    case URIPattern(Link(style, href)) =>  <a href={href} class={style}>{href}</a>
-    case ImagePattern(name, ext) if imageNames contains name + "." + ext => <img src={name + "." + ext}/>  
-    case Match(WikiWords(x)) => x  
+  /**
+   * Prettify a wikiWord for presentation by replacing underscores.
+   */
+  def expandWord( word: String) = {
+    if( word contains "_" )
+      word.replace("_",  " ")
+    else
+      tokenize(CamelHump, word).mkString( " " )  
   }
-
-  val oldDomains: Set[String]
-  val familyDomain: String
-  val localPrefix: String
-  val nonLocalPrefix: String
 }

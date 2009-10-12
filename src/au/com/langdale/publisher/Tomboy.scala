@@ -31,6 +31,7 @@ trait Tomboy extends Publisher {
   val includedTags: Set[String]
   val localPrefix: String
   val nonLocalPrefix: String
+  val homePage = Some("Home")
   def expand( title: String, content: NodeSeq, feeds: Seq[Feed]): Node
   def fixLink(href: String): (String, String)
   def linkWordsAndURIs(t: String): NodeSeq
@@ -40,32 +41,38 @@ trait Tomboy extends Publisher {
   
   def history = notesByKey.values.filter(_.valid).toList.sort( _.date after _.date ).take(12)
 
-  def fileName(name: String, ext: String) =  """\w+""".r.findAllIn(name).mkString("", "_", ext) 
+  def formWikiWord(name: String): String =  """\w+""".r.findAllIn(name).mkString("_") 
 
   class Note( val source: File) extends RSS.Item {
-    private var x = XML.loadFile(source)
+    private val x = XML.loadFile(source)
+
     val title = findChild(x, "title").text.trim
-    val tags = extractTags(x)
-    val date = dateFormat.parse(findChild(x, "create-date").text.trim)
-    val description = initialText(findChild(x, "note-content"), 150).trim
+    val wikiWord = formWikiWord(title)
+    val key = wikiWord.toLowerCase
+    val page = if( linkedTerms contains wikiWord ) linkedTerms(wikiWord) else wikiWord + ".html"
     val link = localPrefix + page
     val url = nonLocalPrefix + page
-    x = null
 
-    def page = fileName(title, ".html")
-    def wikiWord = fileName(title, "")
-    def key = fileName(title.toLowerCase, "")
+    val tags = findChild(x, "tags") flatMap { 
+      case <tag>{Text(tn)}</tag> => List(tn.trim) 
+      case _ => Nil 
+    }
+
+    val date = dateFormat.parse(findChild(x, "create-date").text.trim)
+
+    lazy val content = findChild(x, "text")  flatMap blockRule
+    lazy val description = findChild(content, "p").text.trim 
+    
     def valid =  ! inValid
     def inValid = title.isEmpty || tags.isEmpty || tags.contains(templateTag) ||
                   ! includedTags.isEmpty  && ! tags.exists( includedTags contains _ ) 
-    
-    def content = findChild(XML.loadFile(source), "text")  flatMap blockRule
+  
   }
   
-  override def getContent( wikiWord: String ): Option[(String, NodeSeq)] = {
-    notesByKey.get(wikiWord.toLowerCase) match {
+  override def getContent( pageName: String ): Option[(String, NodeSeq)] = {
+    notesByKey.get(pageName.toLowerCase) match {
       case Some(note) => Some(note.title, note.content)
-      case None => super.getContent( wikiWord )
+      case None => super.getContent( pageName )
     }
   }
   
@@ -78,20 +85,11 @@ trait Tomboy extends Publisher {
       val note = new Note(f)
       notesByKey(note.key) = note
       if(note.valid) {
-        pageNames += note.wikiWord
+        pageNames += note.page
         for( tag <- note.tags )
           notesByTag.getOrElseUpdate(tag, new ListBuffer[Note]) += note
       }
     }
-  }
-  
-  private def extractTags(x: Node) = {
-    val ts = new ListBuffer[String]
-    for( t <- findChild(x, "tags")) t match {
-      case <tag>{Text(tn)}</tag> => ts += tn.trim
-      case _ => 
-    }
-    ts.toList
   }
 
   override def publish {
@@ -104,8 +102,7 @@ trait Tomboy extends Publisher {
       println(note.source + " ~> " + destin)
       
       try {
-        val content = note.content
-        saveXHTML(expand( note.title, content, Nil), destin)
+        saveXHTML(expand( note.title, note.content, Nil), destin)
       } 
       catch {
         case e => println(e); e.printStackTrace
@@ -113,10 +110,13 @@ trait Tomboy extends Publisher {
     }
   }
   
-  def mkMenu(tag: String) = new Menu("tag", notesByTag.getOrElse("system:notebook:" + tag, Nil).toList.sort(_.title < _.title).map( note => (note.title, note.page)))
+  def mkMenu(tag: String) = new Menu("tag", 
+    notesByTag.getOrElse("system:notebook:" + tag, Nil).toList
+    sort(_.title < _.title)
+    map( note => (note.title, note.page)))
 
   private def internalLink(t: String): NodeSeq = {
-    val k = fileName(t.toLowerCase, "")
+    val k = formWikiWord(t).toLowerCase
     notesByKey.get(k) match {
       case Some(note) if note.valid =>
         <a href={note.link} class="internal">{note.title}</a>
