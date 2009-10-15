@@ -13,6 +13,7 @@ class ExampleSite(path: String)
   with Template 
   with Transformer 
   with WikiParser
+  with TextExpander
   with Linker 
   with GoogleAnalytics
 {
