@@ -18,27 +18,30 @@ trait Blog extends Publisher {
   def history: Seq[Item]
   def fixLink( url: String): (String, String)
   
+  val blogPage = "blog.html"
+  val blogRSS = "blog.rss"
+  
   def expand(title: String, content: NodeSeq, feeds: Seq[Feed]): Node
   
   override def scan {
     super.scan
-    pageNames += "blog.html"
+    pageNames += blogPage
   }
   
   override def publish {
     super.publish 
     
-    val feeds = List(Feed(blogTitle, nonLocalPrefix + "blog.rss"))
-    saveXHTML( expand(blogTitle, content(history), feeds), distrib / "blog.html")
+    val feeds = List(Feed(blogTitle, nonLocalPrefix + blogRSS))
+    saveXHTML( expand(blogTitle, content(history), feeds), distrib / blogPage)
 
     object channel extends Item {
-      val url = nonLocalPrefix + "blog.html";
+      val url = nonLocalPrefix + blogPage;
       val title = blogTitle;
       val description = blogDescription;
       val date = new Date
     }
     
-    XML.save((distrib / "blog.rss").getPath, RSS(channel, history), "utf-8")
+    XML.save((distrib / blogRSS).getPath, RSS(channel, history), "utf-8")
   }
   
   private def content(items: Seq[Item]) = 
