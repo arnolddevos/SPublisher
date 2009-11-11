@@ -19,9 +19,9 @@ trait TextExpander extends Publisher {
     
     def word = regex("""\w+""".r)
 
-    def reference = regex("""(\w|-)+(\.(\w|-)+)+(/[^]\[}{>< ]+)?""".r) 
+    //  def reference = regex("""(\w|-)+(\.(\w|-)+)+(/[^]\[}{>< ]+)?""".r) 
     
-    def uri = regex("""https?://[^][}{>< ]+""".r)
+    def uri = regex("""https?://[^]\[}{>< ]+""".r)
     
     def imageName = regex("""\w+\.(jpg|png|gif)""".r)
     
@@ -29,9 +29,15 @@ trait TextExpander extends Publisher {
       case _ ~ n ~ _ if imageNames contains n => <img src={n}/>  
     }
     
-    def refLink = word ~ opt(ws) ~ "[" ~ reference ~ "]" ^^ {
-      case word ~ _ ~ _ ~ ref ~ _ => 
-        fixLink("http://" + ref) match {
+    def uriLink = uri ^^ {
+      u =>  fixLink(u) match {
+        case (style, href) => <a href={href} class={style}>{u}</a>
+      }
+    }
+    
+    def refLink = word ~ opt(ws) ~ "[" ~ uri ~ "]" ^^ {
+      case word ~ _ ~ _ ~ u ~ _ => 
+        fixLink(u) match {
           case (style, href) => <a href={href} class={style}>{word}</a>
         }
     }
@@ -43,7 +49,7 @@ trait TextExpander extends Publisher {
         <a href={localPrefix + w + ".html"} class="internal">{expandWord(w)}</a>
     }
     
-    def part: Parser[NodeSeq] = imageLink | refLink | wordLink | ws | other
+    def part: Parser[NodeSeq] = imageLink | refLink | uriLink | wordLink | ws | other
     
     def whole: Parser[NodeSeq] = rep(part) ^^ { _.reduceLeft( _ ++ _ ) }
     
