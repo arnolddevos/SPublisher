@@ -30,7 +30,7 @@ trait Linker extends Publisher {
           ("contents", URI(null, null, null, null, f))
         else
           ("internal", nonLocalPrefix + "index.html" )
-      else if( a endsWith familyDomain)
+      else if( "." + a endsWith familyDomain )
           ("internal", u)
       else
           ("external", u)  
