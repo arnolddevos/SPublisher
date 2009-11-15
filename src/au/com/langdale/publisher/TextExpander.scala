@@ -19,11 +19,13 @@ trait TextExpander extends Publisher {
     
     def word = regex("""\w+""".r)
 
-    //  def reference = regex("""(\w|-)+(\.(\w|-)+)+(/[^]\[}{>< ]+)?""".r) 
+    def reference = regex("""(\w|-)+(\.(\w|-)+)+(/[^]\[}{>< ]+)?""".r) 
     
     def uri = regex("""https?://[^]\[}{>< ]+""".r)
     
-    def imageName = regex("""\w+\.(jpg|png|gif)""".r)
+    val imageNameRE = """\w+\.(jpg|png|gif)""".r
+    
+    def imageName = regex(imageNameRE)
     
     def imageLink = "[" ~ imageName ~ "]" ^? {
       case _ ~ n ~ _ if imageNames contains n => <img src={n}/>  
@@ -35,9 +37,9 @@ trait TextExpander extends Publisher {
       }
     }
     
-    def refLink = word ~ opt(ws) ~ "[" ~ uri ~ "]" ^^ {
-      case word ~ _ ~ _ ~ u ~ _ => 
-        fixLink(u) match {
+    def refLink = word ~ opt(ws) ~ "[" ~ reference ~ "]" ^? {
+      case word ~ _ ~ _ ~ r ~ _ if imageNameRE.unapplySeq(r).isEmpty => 
+        fixLink("http://" + r) match {
           case (style, href) => <a href={href} class={style}>{word}</a>
         }
     }
