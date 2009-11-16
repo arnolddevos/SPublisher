@@ -16,6 +16,7 @@ class ExampleSite(path: String)
   with TextExpander
   with Linker 
   with GoogleAnalytics
+  with Disqus
 {
   val project = new File(path)
   val sources = List( project / "sitestyle", project / "resources" )
@@ -30,6 +31,7 @@ class ExampleSite(path: String)
   val trackerID = "UA-9999999-1"
   val blogTitle = "Example.com News"
   val blogDescription = "All thats new in the examples world"
+  val disqusID = "abc123"
   
   val menu = new Menu("Main",
     List(

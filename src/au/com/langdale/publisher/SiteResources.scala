@@ -31,7 +31,7 @@ trait SiteResources extends Publisher {
 
   def wikiParse(f: File): (String, NodeSeq)
   def extract(x: Node): (String, NodeSeq)
-  def expand(title: String, content: NodeSeq, feeds: Seq[Feed]): Node
+  def expand(title: String, content: NodeSeq): Node
   
   override def scan {
     super.scan
@@ -94,7 +94,7 @@ trait SiteResources extends Publisher {
     println(f +" ~> " + g)
     try {
       val (title, content) = wikiParse(f)
-      val y = expand(title, content, Nil)
+      val y = expand(title, content)
       saveXHTML(y, g)
     } 
     catch {
@@ -107,7 +107,7 @@ trait SiteResources extends Publisher {
     try {
       val x = XML.loadFile(f)
       val (title, content) = extract(x)
-      val y = expand(title, content, Nil)
+      val y = expand(title, content)
       saveXHTML(y, g)
     } 
     catch {

@@ -29,17 +29,18 @@ trait Tomboy extends Publisher {
   val tomboy: File
   val distrib: File
   val includedTags: Set[String]
+  val blogExcludedTags: Set[String] = Set("system:notebook:Background")
   val localPrefix: String
   val nonLocalPrefix: String
   val homePage = Some("Home")
-  def expand( title: String, content: NodeSeq, feeds: Seq[Feed]): Node
+  def expand( title: String, content: NodeSeq, showComments: Boolean): Node
   def fixLink(href: String): (String, String)
   def linkWordsAndURIs(t: String): NodeSeq
   
   val notesByKey = new HashMap[String, Note]
   val notesByTag = new HashMap[String, ListBuffer[Note]]
   
-  def history = notesByKey.values.filter(_.valid).toList.sort( _.date after _.date ).take(12)
+  def history = notesByKey.values.filter(_.blogable).toList.sort( _.date after _.date ).take(12)
 
   def formWikiWord(name: String): String =  """\w+""".r.findAllIn(name).mkString("_") 
 
@@ -66,6 +67,8 @@ trait Tomboy extends Publisher {
     def valid =  ! inValid
     def inValid = title.isEmpty || tags.isEmpty || tags.contains(templateTag) ||
                   ! includedTags.isEmpty  && ! tags.exists( includedTags contains _ ) 
+    
+    def blogable = valid && ! tags.exists( blogExcludedTags contains _ )
   
   }
   
@@ -102,7 +105,7 @@ trait Tomboy extends Publisher {
       println(note.source + " ~> " + destin)
       
       try {
-        saveXHTML(expand( note.title, note.content, Nil), destin)
+        saveXHTML(expand( note.title, note.content, note.blogable), destin)
       } 
       catch {
         case e => println(e); e.printStackTrace

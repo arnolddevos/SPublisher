@@ -15,6 +15,7 @@ trait Template {
   val menu: Menu
   val footer: NodeSeq
   val analytics: NodeSeq
+  val comments: NodeSeq
   
   def fixLink(href: String): (String, String)
  
@@ -33,8 +34,12 @@ trait Template {
       link debug "feed"
       <link rel="alternate" type="application/rss+xml" title={title} href={link} />
     }
+
+  def expand(title: String, content: NodeSeq): Node = expand(title, content, Nil, false)
+  def expand(title: String, content: NodeSeq, feeds: Seq[Feed]): Node = expand(title, content, feeds, false)
+  def expand(title: String, content: NodeSeq, showComments: Boolean): Node = expand(title, content, Nil, showComments)
   
-  def expand(title: String, content: NodeSeq, feeds: Seq[Feed]) =
+  def expand(title: String, content: NodeSeq, feeds: Seq[Feed], showComments: Boolean) =
     <html xmlns={XHTML}>
       <head>
         <title>{title}</title>
@@ -52,6 +57,7 @@ trait Template {
         </div>
         <div id="main">
           <div id="content">{ content }</div>
+          { if(showComments) comments else NodeSeq.Empty }
           <div id="menu">{ expandMenu(menu) }</div>
         </div>  
         <div id="footer">{ footer }</div>
