@@ -22,7 +22,7 @@ trait Template {
   def expandMenu( menu: Menu ): Node =
     <ul>
     {
-      for((name, target) <- menu) yield {
+      for((name, target) <- menu.entries) yield {
         val (style, href) = fixLink(target)
         <li><a href={href} class={style}>{name}</a></li>
       }

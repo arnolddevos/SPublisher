@@ -64,7 +64,7 @@ trait Gallery extends Publisher {
       val date = new Date
     }
     
-    XML.saveFull((distrib / (galleryName + ".rss")).getPath, RSS2(channel, items), "utf-8", true, null)
+    XML.save((distrib / (galleryName + ".rss")).getPath, RSS2(channel, items), "utf-8", true, null)
     val feed = Feed( galleryTitle, nonLocalPrefix + galleryName + ".rss")
     saveXHTML(GalleryTemplate( feed ), distrib / ( galleryName + ".html"))
   }  

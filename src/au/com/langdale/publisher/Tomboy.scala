@@ -40,7 +40,7 @@ trait Tomboy extends Publisher {
   val notesByKey = new HashMap[String, Note]
   val notesByTag = new HashMap[String, ListBuffer[Note]]
   
-  def history = notesByKey.values.filter(_.blogable).toList.sort( _.date after _.date ).take(12)
+  def history = notesByKey.values.filter(_.blogable).toList.sortWith( _.date after _.date ).take(12)
 
   def formWikiWord(name: String): String =  """\w+""".r.findAllIn(name).mkString("_") 
 
@@ -115,7 +115,7 @@ trait Tomboy extends Publisher {
   
   def mkMenu(tag: String) = new Menu("tag", 
     notesByTag.getOrElse("system:notebook:" + tag, Nil).toList
-    sort(_.title < _.title)
+    sortWith(_.title < _.title)
     map( note => (note.title, note.page)))
 
   private def internalLink(t: String): NodeSeq = {
@@ -155,7 +155,7 @@ trait Tomboy extends Publisher {
       else 
         for( h <- split(g, breakElem(_:Node))) yield 
           if( h.length == 1 )
-            h.first match {
+            h.head match {
               case <code>{child@_*}</code> => <pre>{child}</pre>
               case <strong>{child@_*}</strong> => <h3>{child}</h3>  
               case <big>{child@_*}</big> => <h2>{child}</h2>

@@ -32,7 +32,7 @@ object Pattern {
       case n: Elem 
         if e.label == n.label 
           && e.namespace == null || e.namespace == n.namespace 
-          && e.attributes.forall( n.attributes.elements.contains(_)) =>
+          && e.attributes.forall( n.attributes.iterator.contains(_)) =>
         Some(n.child)
       case _ =>
         None
@@ -75,7 +75,7 @@ object Pattern {
       if( o.isDefined )
         o
       else {
-        val els = n.child.elements
+        val els = n.child.iterator
         var o: Option[Seq[Node]] = None
         while( o.isEmpty && els.hasNext) 
           o = unapplySeq(els.next)

@@ -14,7 +14,7 @@ import scala.util.matching.Regex.Match
  */
 object Util {
   type Rule = PartialFunction[Node, Seq[Node]]
-  class Menu(val title: String, val self: Seq[(String, String)]) extends SeqProxy[(String, String)]  
+  class Menu(val title: String, val entries: Seq[(String, String)])
   val emptyMenu = new Menu("", Nil)
   
   val XHTML = "http://www.w3.org/1999/xhtml"
@@ -156,7 +156,7 @@ object Util {
   implicit def M(e: Node) = new M(e.attributes)
   
   def find(ns: NodeSeq)(rule: Rule): NodeSeq = {
-    val i = ns.elements
+    val i = ns.iterator
     while( i.hasNext) {
       val n = i.next
       if( rule.isDefinedAt(n)) 
@@ -257,7 +257,7 @@ object Util {
   def group[A, B](s: Seq[A], f: A => B): Seq[(B, Seq[A])] = {
     val outer = new ListBuffer[(B, Seq[A])]
 
-    val it = s.elements
+    val it = s.iterator
     def advance = if(it.hasNext) Some(it.next) else None
     var next = advance
     
@@ -273,7 +273,7 @@ object Util {
           next = advance
         }
 
-        outer += (key, inner.toList)
+        outer += key -> inner.toList
     }
     
     outer.toList
@@ -282,7 +282,7 @@ object Util {
   def split[A](s: Seq[A], f: A => Boolean): Seq[Seq[A]] = {
     val outer = new ListBuffer[Seq[A]]
 
-    val it = s.elements
+    val it = s.iterator
     def advance = if(it.hasNext) Some(it.next) else None
     var next = advance
     
