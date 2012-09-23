@@ -1,4 +1,5 @@
-bin
-.manager
-.settings
+/target
+/project/project
+/project/target
+/.cache
 *~
