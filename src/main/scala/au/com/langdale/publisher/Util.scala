@@ -8,6 +8,7 @@ import scala.xml.{XML, Node, NodeSeq, NodeBuffer, Text, Elem, MetaData, TopScope
 import scala.collection.mutable.ListBuffer
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
+import java.io.BufferedOutputStream
 
 /**
  * Various supporting utilities some of which might deserve to go into a library.
@@ -76,14 +77,18 @@ object Util {
       copyFile(a,b)
   }
   
+  def save(sb: CharSequence, f: File) {
+    val s = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(f)), "utf-8")
+    s.write(sb.toString)
+    s.close
+  }
+  
   def saveXHTML(x: Node, f: File) {
     val sb = new StringBuilder
     sb append """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" >
 """
     Xhtml.toXhtml(x, TopScope, sb, false, false)
-    val s = new OutputStreamWriter(new FileOutputStream(f), "utf-8")
-    s.write(sb.toString)
-    s.close
+    save(sb, f)
   }
   
   class AdvancedIterator[A]( it: Iterator[A]) extends Iterator[A] {

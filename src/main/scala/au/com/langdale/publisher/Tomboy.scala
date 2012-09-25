@@ -59,7 +59,8 @@ trait Tomboy extends Publisher {
 
     val date = dateFormat.parse(findChild(x, "create-date").text.trim)
 
-    lazy val content = findChild(x, "text")  flatMap blockRule
+    def body = findChild(x, "text")
+    lazy val content = body flatMap blockRule
     lazy val description = findChild(content, "p").text.trim 
     
     def valid =  ! inValid
