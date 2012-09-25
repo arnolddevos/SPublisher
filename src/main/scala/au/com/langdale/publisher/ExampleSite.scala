@@ -7,12 +7,14 @@ import java.io.File
  * Demonstrates the composition of a site generator from traits.
  */
 class ExampleSite(path: String) 
-  extends SiteResources 
+  extends Publisher 
+  with SiteResources 
   with Tomboy 
   with Blog 
   with Template 
   with Transformer 
   with WikiParser
+  with MarkdownParser
   with TextExpander
   with Linker 
   with GoogleAnalytics
@@ -48,6 +50,6 @@ class ExampleSite(path: String)
 
 object ExampleSite {
   def main( args: Array[String]) {
-    new ExampleSite(args(0)).build
+    new ExampleSite("example").build
   }
 }

@@ -42,8 +42,6 @@ trait Tomboy extends Publisher {
   
   def history = notesByKey.values.filter(_.blogable).toList.sortWith( _.date after _.date ).take(12)
 
-  def formWikiWord(name: String): String =  """\w+""".r.findAllIn(name).mkString("_") 
-
   class Note( val source: File) extends RSS.Item {
     private val x = XML.loadFile(source)
 

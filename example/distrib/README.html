@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
         <title>Static Site Publisher </title>
-        <link href="graphic.css" type="text/css" rel="stylesheet" />
-        <link href="favicon.ico" type="image/x-icon" rel="icon" />
-        <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />  
+        <link type="text/css" rel="stylesheet" href="graphic.css" />
+        <link type="image/x-icon" rel="icon" href="favicon.ico" />
+        <link type="image/x-icon" rel="shortcut icon" href="favicon.ico" />  
             
       </head>
       <body>
@@ -16,9 +16,9 @@
         </div>
         <div id="main">
           <div id="content"><p>Creates static web sites from raw html, wiki markup, 
-tomboy notes, images and other resources.</p><p>A generated site can have an RSS feed and a basic blog,
+tomboy notes, images and other resources.</p><p>A generated site can have an RSS feed and a basic <a class="internal" href="blog.html">blog</a>,
 an image feed and slideshow, and analytics support.</p><h2>Examples </h2><p>A site generated with this software and hosted on S3 can be seen here: 
-<a href="http://wiki.cimtool.org/index.html" class="external">http://wiki.cimtool.org/index.html</a></p><p>Peruse the examples directory tree and ExampleSite.scala for another.  
+<a class="external" href="http://wiki.cimtool.org/index.html">http://wiki.cimtool.org/index.html</a></p><p>Peruse the examples directory tree and ExampleSite.scala for another.  
 The output is in example/distrib while the inputs are in example/resource
 example/tomboy and example/sitestyle . </p><p>You can edit the inputs and regenerate the output by launching the provided
 Publisher eclipse run configuration.  If you are not using eclipse, run the 
@@ -31,8 +31,9 @@ See the trait comment for a synopsis.  </p></li><li><p>A trait will declare abst
 expects others to implement (dependancies).</p></li><li><p>A trait will implement members 
 used by other traits (dependents).</p></li><li><p>Some abstract members represent configuration
 constants that should be defined in the site object. </p></li></ul></div>
+          
           <div id="menu"><ul>
-    <li><a href="About_This_Web_Site.html" class="internal">Home</a></li><li><a href="http://www.example.com/blog.html" class="internal">News Feed</a></li>
+    <li><a class="internal" href="About_This_Web_Site.html">Home</a></li><li><a class="internal" href="blog.html">News Feed</a></li>
     </ul></div>
         </div>  
         <div id="footer"><div>

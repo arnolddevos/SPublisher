@@ -19,6 +19,7 @@ object Util {
   
   val XHTML = "http://www.w3.org/1999/xhtml"
 
+  def formWikiWord(name: String): String =  """\w+""".r.findAllIn(name).mkString("_") 
   
   object E {
     def apply(label: String, atts: MetaData, child: Seq[Node]) = Elem( null, label, atts, TopScope, child: _*)

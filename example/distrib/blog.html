@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
       <head>
         <title>Example.com News</title>
-        <link href="graphic.css" type="text/css" rel="stylesheet" />
-        <link href="favicon.ico" type="image/x-icon" rel="icon" />
-        <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />  
-        <link href="http://www.example.com/blog.rss" title="Example.com News" type="application/rss+xml" rel="alternate" />    
+        <link type="text/css" rel="stylesheet" href="graphic.css" />
+        <link type="image/x-icon" rel="icon" href="favicon.ico" />
+        <link type="image/x-icon" rel="shortcut icon" href="favicon.ico" />  
+        <link type="application/rss+xml" title="Example.com News" rel="alternate" href="http://www.example.com/blog.rss" />    
       </head>
       <body>
         
@@ -17,19 +17,16 @@
         <div id="main">
           <div id="content"><div class="blog-item">
         <h2>SPublisher</h2>
-        <p>SPublisher
-
-A simple, static, site publisher in scala. See the README.</p>
-        <p><span class="datetime">Fri Jun 19 09:36:19 EST 2009</span> <a href="http://www.example.com/SPublisher.html">more...</a></p>
+        <p>A simple, static, site publisher in scala. See the README.</p>
+        <p><span class="datetime">Fri Jun 19 09:36:19 EST 2009</span> <a class="internal" href="http://www.example.com/SPublisher.html">more...</a></p>
       </div><div class="blog-item">
         <h2>About This Web Site</h2>
-        <p>About This Web Site
-
-This is a sample web site created with SPublisher.</p>
-        <p><span class="datetime">Fri Jun 19 09:34:59 EST 2009</span> <a href="http://www.example.com/About_This_Web_Site.html">more...</a></p>
+        <p>This is a sample web site created with SPublisher.</p>
+        <p><span class="datetime">Fri Jun 19 09:34:59 EST 2009</span> <a class="internal" href="http://www.example.com/About_This_Web_Site.html">more...</a></p>
       </div></div>
+          
           <div id="menu"><ul>
-    <li><a href="About_This_Web_Site.html" class="internal">Home</a></li><li><a href="http://www.example.com/blog.html" class="internal">News Feed</a></li>
+    <li><a class="internal" href="About_This_Web_Site.html">Home</a></li><li><a class="internal" href="blog.html">News Feed</a></li>
     </ul></div>
         </div>  
         <div id="footer"><div>

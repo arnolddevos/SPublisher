@@ -19,6 +19,10 @@ import Util._
  * Wikitext files with file extension .txt are transformed to html 
  * by a (very) simple Trac-style parser.
  * 
+ * Pegdown is used to translate markdown files with file extension .md.
+ * 
+ * Images and CSS files are copied.
+ * 
  * Files with names ending in ~ are ignored.
  * 
  * Anything else is taken to be HTML and is passed through a cleanup transformation.  
@@ -30,6 +34,7 @@ trait SiteResources extends Publisher {
   val distrib: File
 
   def wikiParse(f: File): (String, NodeSeq)
+  def markdownParse(f: File): (String, NodeSeq)
   def extract(x: Node): (String, NodeSeq)
   def expand(title: String, content: NodeSeq): Node
   
@@ -60,6 +65,8 @@ trait SiteResources extends Publisher {
   
   def isWikiPage(f: File) = f.isFile && f.getName.endsWith(".txt")
   
+  def isMarkdownPage(f: File) = f.isFile && f.getName.endsWith(".md")
+  
   override def publish {
     super.publish
     ensureDir(distrib)
@@ -70,7 +77,7 @@ trait SiteResources extends Publisher {
       if( isPage(f)) {
         val rname = stripext(f.getName) + ".html"
         if(! (topNames contains rname)) {
-          if( isWikiPage(f))
+          if( isWikiPage(f) || isMarkdownPage(f))
             publishWikiPage(f, distrib / rname)
           else
             publishMarkup(f, distrib / rname)
@@ -93,7 +100,7 @@ trait SiteResources extends Publisher {
   private def publishWikiPage(f: File, g: File) {
     println(f +" ~> " + g)
     try {
-      val (title, content) = wikiParse(f)
+      val (title, content) = if( isWikiPage(f)) wikiParse(f) else markdownParse(f)
       val y = expand(title, content)
       saveXHTML(y, g)
     } 

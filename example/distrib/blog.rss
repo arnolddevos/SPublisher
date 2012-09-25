@@ -1,4 +1,4 @@
-<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://purl.org/rss/1.0/">
       <channel rdf:about="">
         <title>Example.com News</title>
         <link>http://www.example.com/blog.html</link>
@@ -12,16 +12,12 @@
       <item rdf:about="http://www.example.com/SPublisher.html">
             <title>SPublisher</title>
             <link>http://www.example.com/SPublisher.html</link>  
-            <description>SPublisher
-
-A simple, static, site publisher in scala. See the README.</description>
+            <description>A simple, static, site publisher in scala. See the README.</description>
             <dc:date>2009-06-19T09:36:19+10:00</dc:date>
           </item><item rdf:about="http://www.example.com/About_This_Web_Site.html">
             <title>About This Web Site</title>
             <link>http://www.example.com/About_This_Web_Site.html</link>  
-            <description>About This Web Site
-
-This is a sample web site created with SPublisher.</description>
+            <description>This is a sample web site created with SPublisher.</description>
             <dc:date>2009-06-19T09:34:59+10:00</dc:date>
           </item>  
     </rdf:RDF>
