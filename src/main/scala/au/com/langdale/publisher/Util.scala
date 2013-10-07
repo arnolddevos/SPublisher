@@ -85,7 +85,7 @@ object Util {
   
   def saveXHTML(x: Node, f: File) {
     val sb = new StringBuilder
-    sb append """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" >
+    sb append """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 """
     Xhtml.toXhtml(x, TopScope, sb, false, false)
     save(sb, f)
