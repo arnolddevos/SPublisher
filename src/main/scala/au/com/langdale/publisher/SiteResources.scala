@@ -105,7 +105,7 @@ trait SiteResources extends Publisher {
       saveXHTML(y, g)
     } 
     catch {
-      case e => println(e);
+      case e: Exception => println(e);
     }  
   }
   
@@ -118,7 +118,7 @@ trait SiteResources extends Publisher {
       saveXHTML(y, g)
     } 
     catch {
-      case e => println(e);
+      case e: Exception => println(e);
     }  
   }
 }

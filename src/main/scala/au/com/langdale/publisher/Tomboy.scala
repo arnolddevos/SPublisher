@@ -107,7 +107,7 @@ trait Tomboy extends Publisher {
         saveXHTML(expand( note.title, note.content, note.blogable), destin)
       } 
       catch {
-        case e => println(e); e.printStackTrace
+        case e: Exception => println(e); e.printStackTrace
       }  
     }
   }

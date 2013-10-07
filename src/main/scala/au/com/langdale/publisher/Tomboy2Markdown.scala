@@ -31,7 +31,7 @@ trait Tomboy2Markdown extends Publisher { this: Tomboy with Html2Markdown =>
         save(text.mkString, destin)
       } 
       catch {
-        case e => println(e); e.printStackTrace
+        case e: Exception => println(e); e.printStackTrace
       }  
     }
   }
