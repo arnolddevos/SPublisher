@@ -6,6 +6,12 @@ generic wiki markup, tomboy notes, images and other resources.
 A generated site can have an RSS feed and a basic blog,
 an image feed and slideshow, and analytics support.
 
+## Deprecated in Favour of Soapbox
+
+The most useful features of SPublisher have now been migrated to the sbt environment in [Soapbox](https://github.com/arnolddevos/Soapbox). i
+Some things, such as RSS, were dropped. 
+Markdown replaces the tomcat notes utility for authoring content.
+
 ## Recent Changes
 
 * SPublisher has gained [Markdown] support. The [pegdown] markdown parser is a dependency.
